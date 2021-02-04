@@ -18,9 +18,3 @@ class Node
     end
 end
 
-a = Node.new(1)
-b = Node.new(3)
-
-p a < b
-p a <= b
-p a == b
