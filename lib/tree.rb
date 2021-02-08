@@ -48,31 +48,24 @@ class Tree
             puts "Element is already in the Tree, duplicates are not allowed!"
         else
             insert_element(@root,value)
-
-        end
-        
+        end     
     end
 
     def insert_element(root,value)
         if(value < root)
             if(defined?(root.left.data))
-                insert_element(root.left,value)
-               
+                insert_element(root.left,value)     
             else
                 root.left = value
             end
         else
             if(defined?(root.right.data))
-                insert_element(root.right,value)
-               
+                insert_element(root.right,value)          
             else
                 root.right = value
-            end
-
-           
+            end    
         end
         rebalance()
-
     end
 
     def delete_element(root,oldroot, value)
@@ -168,6 +161,7 @@ class Tree
         end   
     end
 
+
     def delete(value)
         value = Node.new(value)
         if (value == @root)
@@ -206,6 +200,7 @@ class Tree
     end
 
     def get_elements_into_array(node,array = [])
+        
         array.push(node)
         if(defined?(node.left.data))
             get_elements_into_array(node.left,array)
@@ -227,6 +222,69 @@ class Tree
         return array
     end
 
+    def level_order_traversal()
+        queue = []
+        level_order = []
+        queue.unshift @root
+
+        while(queue != [])
+            next_item = queue.pop
+            level_order.push(next_item.data)
+            if(defined?(next_item.left.data))
+                queue.unshift(next_item.left)
+
+            end
+            if(defined?(next_item.right.data))
+                queue.unshift(next_item.right)
+            end
+        end
+
+        return level_order.to_s
+    end
+
+    def inorder(root,return_array = [])
+
+        if(!defined?(root.data))
+            return
+        end
+        if(defined?(root.left))
+            inorder(root.left,return_array)
+        end
+
+        return_array.push(root.data)
+        if(defined?(root.right))
+            inorder(root.right,return_array)
+        end
+
+        return return_array.to_s
+
+    end
+    def preorder(root,return_array = [])
+        return_array.push(root.data)
+        if(defined?(root.left.data))
+            preorder(root.left,return_array)
+        end
+        if(defined?(root.right.data))
+            preorder(root.right,return_array)
+        end
+
+        return return_array.to_s
+    end
+
+    def postorder(root,return_array = [])
+        if(!defined?(root.data))
+            return
+        end
+        if(defined?(root.left))
+            postorder(root.left,return_array)
+        end
+        if(defined?(root.right))
+            postorder(root.right,return_array)
+        end
+        return_array.push(root.data)
+        return return_array.to_s
+    end
+
     def root
         return @root
     end
@@ -241,7 +299,6 @@ end
 a = Tree.new([100,1,0,0,0,1,1,3,4,5,6,2,3,4,5,34,23,656,34,23,1,3,65,456,354,24,234,63,13,43,65,7,8,9])
 
 
-
 b = Tree.new([1,2,3,4,5,6,7,8,9,10,11,12,13,14])
 
 
@@ -249,26 +306,22 @@ b = Tree.new([1,2,3,4,5,6,7,8,9,10,11,12,13,14])
 #a.delete(493090)
 b.pretty_print
 #a.get_elements_into_array(32)
+puts b.level_order_traversal
+puts b.find(11,b.root)
+
+puts b.preorder(b.root)
+puts b.inorder(b.root)
+puts b.postorder(b.root)
+
+c = Tree.new([1,2,3,4,5,6])
+c.pretty_print
+puts "preorder"
+puts c.preorder(c.root)
+puts "inorder"
+puts c.inorder(c.root)
+puts "postorder"
+puts c.postorder(c.root)
 
 
 
 
-
-
-
-b.delete(4)
-b.pretty_print
-b.delete(1)
-b.pretty_print
-b.delete(6)
-b.pretty_print
-b.delete(12)
-b.pretty_print
-puts b.find(1000,b.root)
-b.insert(12)
-b.pretty_print
-
-a.insert(29)
-a.insert(26)
-a.insert(25)
-a.pretty_print
